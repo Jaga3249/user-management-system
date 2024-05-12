@@ -1,11 +1,12 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
     name: {
       type: String,
       required: [true, "name is required"],
-      unique: true,
     },
     email: {
       type: String,
@@ -31,11 +32,32 @@ const userSchema = new Schema(
     },
     is_verified: {
       type: Number,
-      required: true,
       default: 0,
+    },
+    refreshToken: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }
 );
+
+userSchema.methods.generateAcessToken = (user) => {
+  return jwt.sign(
+    {
+      _id: user._id,
+      email: user.email,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
+  );
+};
+userSchema.methods.generateRefreshToken = (user) => {
+  return jwt.sign({ _id: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+  });
+};
 
 export const User = mongoose.model("User", userSchema);

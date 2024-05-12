@@ -1,6 +1,11 @@
+import { app } from "./app.js";
+import dotenv from "dotenv";
 import { DbConnect } from "./db/index.js";
-import express from "express";
-const app = express();
+
+dotenv.config({
+  path: "./.env",
+});
+
 DbConnect()
   .then(() => {
     app.listen(process.env.PORT || 3000, () => {
