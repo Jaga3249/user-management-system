@@ -8,3 +8,8 @@ export const asyncHandle = (fn) => async (req, res, next) => {
     });
   }
 };
+
+const dsta = () => {
+  try {
+  } catch (error) {}
+};

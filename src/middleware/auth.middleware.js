@@ -13,6 +13,7 @@ export const verifyJwt = asyncHandle(async (req, res, next) => {
       throw new ApiError(401, "unAuthorized user");
     }
     const decodeValue = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log("decodeValue", decodeValue);
     const user = await User.findById(decodeValue._id);
     if (!user) {
       throw new ApiError(400, "missing acess token");
