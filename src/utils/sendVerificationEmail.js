@@ -1,21 +1,20 @@
 import nodemailer from "nodemailer";
 
 export const sendVerificationEmail = (name, email, id) => {
-  console.log("email: ", email);
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+      host: "smtp.gmail.com",
       port: 587,
       auth: {
-        user: "monty.bashirian@ethereal.email",
-        pass: "5pDt5nCSDcqTkMJTVu",
+        user: "jagannathbehera0244@gmail.com",
+        pass: "wghmrtwhnlhcztyu",
       },
     });
     const option = {
-      from: "monty.bashirian@ethereal.email",
+      from: "Jagannath Behera",
       to: email,
       subject: "For Verification Mail",
-      html: `<p>Hi, ${name} ,Please click here to <a href="http://localhost:8000/api/v1/users/verify?id=${id}">verify</a></p>`, // html body
+      html: `<P>Hi ,${name},Please click here to <a href="http://localhost:8000/api/v1/users/verify?id=${id}">verify</a> your gmail</p>`,
     };
     transporter.sendMail(option, (error, info) => {
       if (error) {
